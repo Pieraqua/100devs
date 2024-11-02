@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://b21eggfkoba0u"]
+[gd_scene load_steps=4 format=3 uid="uid://b21eggfkoba0u"]
 
+[ext_resource type="Script" path="res://menu.gd" id="1_cj0ja"]
 [ext_resource type="Texture2D" uid="uid://c044a67171axd" path="res://curitiba_1900.jpg" id="1_xbe35"]
 
 [sub_resource type="Theme" id="Theme_v1jxf"]
@@ -12,17 +13,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_cj0ja")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.351563, 0.351563, 0.351563, 1)
-
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="TownMain" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -35,28 +28,113 @@ grow_horizontal = 2
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="TownPicture" type="TextureRect" parent="VBoxContainer"]
+[node name="TownPicture" type="TextureRect" parent="TownMain"]
 layout_mode = 2
 theme = SubResource("Theme_v1jxf")
 texture = ExtResource("1_xbe35")
 
-[node name="TownDescription" type="Label" parent="VBoxContainer"]
+[node name="TownDescription" type="Label" parent="TownMain"]
 layout_mode = 2
 text = "You have reached the town of [town]."
 horizontal_alignment = 1
 
-[node name="Shop" type="Button" parent="VBoxContainer"]
+[node name="Shop" type="Button" parent="TownMain"]
 layout_mode = 2
 text = "Shop"
 
-[node name="Talk" type="Button" parent="VBoxContainer"]
+[node name="Talk" type="Button" parent="TownMain"]
 layout_mode = 2
 text = "Talk"
 
-[node name="Supplies" type="Button" parent="VBoxContainer"]
+[node name="Supplies" type="Button" parent="TownMain"]
 layout_mode = 2
 text = "Check Supplies"
 
-[node name="Continue" type="Button" parent="VBoxContainer"]
+[node name="Continue" type="Button" parent="TownMain"]
 layout_mode = 2
 text = "Continue Journey"
+
+[node name="TalkMenu" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -256.0
+offset_top = 50.0
+offset_right = 256.0
+offset_bottom = 240.0
+grow_horizontal = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="TownDescription" type="Label" parent="TalkMenu"]
+layout_mode = 2
+text = "Hey there! Did you know?"
+horizontal_alignment = 1
+
+[node name="Return" type="Button" parent="TalkMenu"]
+layout_mode = 2
+text = "Return"
+
+[node name="ShopMenu" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -256.0
+offset_top = 50.0
+offset_right = 256.0
+offset_bottom = 240.0
+grow_horizontal = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="ShopDescription" type="Label" parent="ShopMenu"]
+layout_mode = 2
+text = "Whatchu wanna buy?"
+horizontal_alignment = 1
+
+[node name="Return" type="Button" parent="ShopMenu"]
+layout_mode = 2
+text = "Return"
+
+[node name="SuppliesMenu" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -256.0
+offset_top = 50.0
+offset_right = 256.0
+offset_bottom = 240.0
+grow_horizontal = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="SuppliesDescription" type="Label" parent="SuppliesMenu"]
+layout_mode = 2
+text = "You currently have:"
+horizontal_alignment = 1
+
+[node name="Return" type="Button" parent="SuppliesMenu"]
+layout_mode = 2
+text = "Return"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -1
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.351563, 0.351563, 0.351563, 1)
+
+[connection signal="pressed" from="TownMain/Shop" to="." method="change_scene" binds= [NodePath("../../ShopMenu")]]
+[connection signal="pressed" from="TownMain/Talk" to="." method="change_scene" binds= [NodePath("../../TalkMenu")]]
+[connection signal="pressed" from="TownMain/Supplies" to="." method="change_scene" binds= [NodePath("../../SuppliesMenu")]]
+[connection signal="pressed" from="TalkMenu/Return" to="." method="change_scene" binds= [NodePath("../../TownMain")]]
+[connection signal="pressed" from="ShopMenu/Return" to="." method="change_scene" binds= [NodePath("../../TownMain")]]
+[connection signal="pressed" from="SuppliesMenu/Return" to="." method="change_scene" binds= [NodePath("../../TownMain")]]
